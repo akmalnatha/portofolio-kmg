@@ -1,9 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Inter,
+  DM_Sans,
+  Handjet,
+  DotGothic16,
+} from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import MainWrapper from "@/layout/main-wrapper";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+
+const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans" });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,6 +24,17 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const handjet = Handjet({
+  variable: "--font-handjet",
+  subsets: ["latin"],
+});
+
+const dotGothic = DotGothic16({
+  variable: "--font-dot-gothic",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -26,11 +48,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", inter.variable)}>
+    <html lang="en" className={cn("dark font-dm-sans", dmSans.variable)}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${handjet.variable} ${dotGothic.variable} antialiased`}
       >
-        {children}
+        <TooltipProvider>
+          <MainWrapper>{children}</MainWrapper>
+        </TooltipProvider>
       </body>
     </html>
   );
